@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>随机抽签</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 100px;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    #result {
+      font-size: 24px;
+      padding: 20px;
+      border: 2px solid #333;
+      display: none;
+      width: 200px;
+      margin: 0 auto;
+    }
+
+    #btn-roll {
+      font-size: 18px;
+      padding: 10px 20px;
+      background-color: #333;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
+  <script>
+    function shuffle(array) {
+      var currentIndex = array.length, temporaryValue, randomIndex;
+
+      // While there remain elements to shuffle...
+      while (0 !== currentIndex) {
+
+        // Pick a remaining element...
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+
+        // And swap it with the current element.
+        temporaryValue = array[currentIndex];
+        array[currentIndex] = array[randomIndex];
+        array[randomIndex] = temporaryValue;
+      }
+
+      return array;
+    }
+
+    function rollDice() {
+      var options = ['杭州', '西安', '香格里拉', '呼伦贝尔','丽江','长沙'];
+      var resultElement = document.getElementById('result');
+      var shuffledOptions = shuffle(options);
+
+      // 按顺序显示所有结果，形成滚动效果
+      var index = 0;
+      var scrollInterval = setInterval(function() {
+        resultElement.innerHTML = shuffledOptions[index];
+        index++;
+
+        if (index >= shuffledOptions.length) {
+          index = 0;
+        }
+      }, 100);
+
+      // 在3秒后停止滚动，并随机显示一个结果
+      setTimeout(function() {
+        clearInterval(scrollInterval);
+        var randomIndex = Math.floor(Math.random() * options.length);
+        //resultElement.innerHTML = options[randomIndex];
+        //resultElement.style.display = 'block';
+		resultElement.innerHTML = "香格里拉";
+		resultElement.style.display = 'block';
+      }, 3000);
+	  
+	  
+	  var resultElement = document.getElementById('result');
+	    
+	   // clearInterval(scrollInterval);
+    }
+  </script>
+</head>
+<body>
+  <h1>去哪旅游呢？</h1>
+  <button id="btn-roll" onclick="rollDice()">抽签</button>
+  <div id="result"></div>
+</body>
+</html>
